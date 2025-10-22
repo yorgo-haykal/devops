@@ -17,3 +17,6 @@ Run PostgreSQL:
 
 Start Adminer
 `docker run -d --name adminer --network app-network -p 8080:8080 adminer`
+
+## Question 1-4
+We need a multistage build to separate the container images used to build the project from the one used to run it, that way we can drastically reduce the run image size thus making it quicker. The explaination of each step of the dockerfile is in its comments.

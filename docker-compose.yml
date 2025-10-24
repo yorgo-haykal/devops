@@ -1,0 +1,40 @@
+services:
+  backend:
+    build: ./backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/appdb
+      SPRING_DATASOURCE_USERNAME: usr
+      SPRING_DATASOURCE_PASSWORD: pwd
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+    networks:
+      - app-network
+    depends_on:
+      - database
+
+  database:
+    build: ./database
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: usr
+      POSTGRES_PASSWORD: pwd
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./database/initdb:/docker-entrypoint-initdb.d:ro
+    networks:
+      - app-network
+
+  httpd:
+    build: ./http-server
+    ports:
+      - "8081:80"
+    networks:
+      - app-network
+    depends_on:
+      - backend
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db-data:  

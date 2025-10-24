@@ -20,3 +20,6 @@ Start Adminer
 
 ## Question 1-4
 We need a multistage build to separate the container images used to build the project from the one used to run it, that way we can drastically reduce the run image size thus making it quicker. The explaination of each step of the dockerfile is in its comments.
+
+## Question 1-5
+A reverse proxy is used to protect backend servers, balance traffic, centralize access, improve performance, and ensure reliability by acting as a single secure entry point between clients and internal services.

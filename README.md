@@ -23,3 +23,23 @@ We need a multistage build to separate the container images used to build the pr
 
 ## Question 1-5
 A reverse proxy is used to protect backend servers, balance traffic, centralize access, improve performance, and ensure reliability by acting as a single secure entry point between clients and internal services.
+
+## Question 1-6
+docker compose allows us to easily run and manage multiple containers at the same time, which makes it easier to manage full-stack apps on docker.
+
+## Question 1-7
+- docker compose up: starts all services defined in the compose.yml file.
+- docker compose down: stops and removes running services.
+- docker compose logs: prints logs to monitor the output of the running containers and debug issues.
+- docker compose ps: list all the services along with their current status.
+
+## Question 1-8
+This docker-compose.yml defines a three-tier application with a backend, database, and HTTP server:
+	•	Backend (Spring Boot) — runs the API that handles requests from the HTTP server and communicates with the database.
+	•	Database (PostgreSQL) — stores persistent data; initialized automatically with SQL scripts from the /initdb directory.
+	•	HTTPD (Apache) — acts as a simple web server or reverse proxy to serve the frontend and route API calls to the backend.
+
+All services are connected via a shared bridge network (app-network), enabling them to communicate by service names (e.g., the backend connects to database:5432).
+A named volume (db-data) is used to persist PostgreSQL data, ensuring that information is not lost when containers stop.
+
+Environment variables are loaded securely from an external .env file instead of hardcoding them directly in the YAML, which improves maintainability and security.

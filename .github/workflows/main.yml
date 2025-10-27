@@ -22,14 +22,14 @@ jobs:
         run: mvn -B -ntp clean verify
 
       - name: SonarCloud Analyze (Maven)
-        working-directory: ./backend/simpleapi
+        working-directory: ./backend
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mvn -B -ntp verify sonar:sonar \
-            -Dsonar.projectKey=<your-project-key> \
-            -Dsonar.organization=<your-organization> \
+            -Dsonar.projectKey=yorgo-haykal_devops \
+            -Dsonar.organization=yorgo-haykal \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${SONAR_TOKEN}
 

@@ -21,8 +21,6 @@ jobs:
         working-directory: ./backend/simpleapi
         run: mvn -B -ntp clean verify
 
-      
-  
   sonar-cloud:
     runs-on: ubuntu-24.04
     steps:

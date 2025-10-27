@@ -50,7 +50,7 @@ jobs:
       - name: Build and push httpd image
         uses: docker/build-push-action@v6
         with:
-          context: ./httpd
+          context: ./http-server
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-httpd:latest
 

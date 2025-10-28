@@ -94,27 +94,17 @@ jobs:
 
       - name: Install Ansible Docker collection
         run: ansible-galaxy collection install community.docker
-
-      - name: Create Ansible vault password file
-        run: |
-          echo "${{ secrets.ANSIBLE_VAULT_PASSWORD }}" > ansible/.vault_pass
-          chmod 600 ansible/.vault_pass
       
       - name: Setup SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H yorgo.haykal.takima.cloud >> ~/.ssh/known_hosts
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       
       - name: Run Ansible playbook
         working-directory: ./ansible
+        env:
+          ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
         run: |
           ansible-playbook -i inventories/setup.yml deploy.yml \
-            --vault-password-file .vault_pass
+            --vault-password-file <(echo "$ANSIBLE_VAULT_PASSWORD")
       
-      - name: Cleanup
-        if: always()
-        run: |
-          rm -f ~/.ssh/id_rsa
-          rm -f ansible/.vault_pass

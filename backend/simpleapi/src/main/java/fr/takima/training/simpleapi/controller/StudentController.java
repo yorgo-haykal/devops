@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/students")
+@RequestMapping("/api/students")
 public class StudentController {
     private final StudentService studentService;
 

@@ -63,7 +63,7 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-simple-api:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/devops-backend:latest
 
       - name: Build and push database image
         if: github.ref == 'refs/heads/main'
@@ -71,7 +71,7 @@ jobs:
         with:
           context: ./database
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-database:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/devops-database:latest
 
       - name: Build and push httpd image
         if: github.ref == 'refs/heads/main'
@@ -79,7 +79,7 @@ jobs:
         with:
           context: ./http-server
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-httpd:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/devops-httpd:latest
 
   deploy:
     needs: build-and-push-docker-image

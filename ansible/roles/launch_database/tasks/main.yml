@@ -5,6 +5,8 @@
     name: database
     image: "yorgohaykal/devops-database:latest"
     restart_policy: unless-stopped
+    pull: always
+    recreate: yes
     networks:
       - name: app-network
     env:

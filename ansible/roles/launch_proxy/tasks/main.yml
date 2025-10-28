@@ -2,7 +2,9 @@
   community.docker.docker_container:
     name: httpd
     image: "yorgohaykal/devops-httpd:latest"
-    restart_policy: no
+    restart_policy: unless-stopped
+    pull: always
+    recreate: yes
     networks:
       - name: proxy-network
     published_ports:

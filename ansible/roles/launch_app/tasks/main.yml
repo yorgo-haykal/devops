@@ -6,6 +6,8 @@
     image: "yorgohaykal/devops-backend:latest"
     state: started
     restart_policy: always
+    pull: always
+    recreate: yes
     networks:
       - name: app-network
       - name: proxy-network

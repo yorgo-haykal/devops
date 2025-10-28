@@ -82,6 +82,17 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/devops-httpd:latest
 
+      - name: Build and push frontend image
+        if: github.ref == 'refs/heads/main'
+        uses: docker/build-push-action@v6
+        with:
+          context: ./devops-front-main
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/devops-frontend:latest
+          build-args: |
+            VUE_APP_API_URL=yorgo.haykal.takima.cloud/api
+
   deploy:
     needs: build-and-push-docker-image
     runs-on: ubuntu-24.04

@@ -1,0 +1,11 @@
+---
+- name: Run frontend
+  community.docker.docker_container:
+    name: frontend
+    image: "yorgohaykal/devops-frontend:latest"
+    state: started
+    restart_policy: unless-stopped
+    pull: always
+    recreate: yes
+    networks:
+      - name: proxy-network

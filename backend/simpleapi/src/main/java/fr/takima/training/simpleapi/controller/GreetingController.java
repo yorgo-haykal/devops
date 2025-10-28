@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
+@RequestMapping("/api")
 @CrossOrigin
 public class GreetingController {
 

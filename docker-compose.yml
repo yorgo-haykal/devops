@@ -1,27 +1,30 @@
 services:
   backend:
     build: ./backend
+    restart: unless-stopped
     env_file:
       - .env
     networks:
       - app-network
+      - db-network
     depends_on:
       - database
 
   database:
     build: ./database
+    restart: on-failure:5
     env_file:
       - .env
     volumes:
       - db-data:/var/lib/postgresql/data
-      - ./database/initdb:/docker-entrypoint-initdb.d:ro
     networks:
-      - app-network
+      - db-network
 
   httpd:
     build: ./http-server
+    restart: unless-stopped
     ports:
-      - "8081:80"
+      - "80:80"
     networks:
       - app-network
     depends_on:
@@ -29,6 +32,8 @@ services:
 
 networks:
   app-network:
+    driver: bridge
+  db-network:
     driver: bridge
 
 volumes:

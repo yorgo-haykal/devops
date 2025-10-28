@@ -22,6 +22,7 @@ jobs:
         run: mvn -B -ntp clean verify
 
   sonar-cloud:
+    needs: test-backend
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -46,7 +47,7 @@ jobs:
             -Dsonar.login=${SONAR_TOKEN}
 
   build-and-push-docker-image:
-    needs: test-backend
+    needs: sonar-cloud
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4

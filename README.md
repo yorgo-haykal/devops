@@ -43,3 +43,46 @@ All services are connected via a shared bridge network (app-network), enabling t
 A named volume (db-data) is used to persist PostgreSQL data, ensuring that information is not lost when containers stop.
 
 Environment variables are loaded securely from an external .env file instead of hardcoding them directly in the YAML, which improves maintainability and security.
+
+## Question 1-9
+To make my Docker images usable on other machines, I published them to Docker Hub.
+I logged in, tagged the images with my Docker Hub namespace and version, and pushed them:
+`docker login`
+`docker tag my-database yorgohaykal/my-database:1.0`
+`docker push yorgohaykal/my-database:1.0`
+
+## Questions 1-10
+To make the image available to every system that needs to deploy or update it, reliably and automatically.
+
+# TP part 02 - Github Actions
+## Question 2-1
+Testcontainers allow integration tests to run against real Dockerized dependencies instead of mocks or local installs.
+
+## Question 2-2
+We use secured varibales to protect sensitive information like passwords and tokens, that way we don't publish them and they don't appear in logs.
+
+## Question 2-3
+We put needs: test-backend so that it only runs when test-backend is completed, if test-backend fails it doesn't run which makes sense because we don't want to push a faulty image.
+
+## Question 2-4
+We push our Docker images so that other machines can pull the exact same version of our application and deploy it reliably.
+
+# TP part 03 - Ansible
+## Question 3-1
+The inventory file tells Ansible which server to manage and how to connect to it (SSH user, key, hostname).
+Example commands:
+- ansible all -i inventories/setup.yml -m ping → check connectivity
+- ansible all -i inventories/setup.yml -m setup → get system info (facts)
+- ansible all -i inventories/setup.yml -m apt -a "name=apache2 state=absent" --become → enforce package state
+
+## Question 3-2
+This playbook installs and configures Docker automatically on the remote server.
+It updates the APT cache, adds Docker’s official repository and GPG key, installs Docker CE along with Python tools required by Ansible, and ensures the Docker service is running.
+This provides a clean and repeatable Docker setup with no manual actions needed.
+
+## Question 3-3
+This playbook deploys the entire application stack to the production server. It installs Docker, creates the network and volume, and starts the three services (DB, backend, proxy).
+Secrets are handled via Ansible Vault. Only the proxy is exposed to the public.
+
+## Question 3-4
+Automatically deploying every image pushed to the registry is not safe, because untested or compromised images could reach production. To secure it, we should enforce CI validations, control which branches trigger deployment, require approvals, and deploy only signed and versioned images.

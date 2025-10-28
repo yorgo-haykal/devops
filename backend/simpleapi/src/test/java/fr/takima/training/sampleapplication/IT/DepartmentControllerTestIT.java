@@ -23,7 +23,7 @@ class DepartmentControllerTestIT {
     @Test
     @Sql({"/InsertData.sql"})
     void testGetDepartmentByName() throws Exception {
-        mockMvc.perform(get("/departments/ASI"))
+        mockMvc.perform(get("api/departments/ASI"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", equalTo(1)))
                 .andExpect(jsonPath("name", equalTo("ASI")));
@@ -32,14 +32,14 @@ class DepartmentControllerTestIT {
     @Test
     @Sql({"/InsertData.sql"})
     void testGetNonExistingDepartmentByName() throws Exception {
-        mockMvc.perform(get("/departments/NIMPORTEQUOI"))
+        mockMvc.perform(get("api/departments/NIMPORTEQUOI"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     @Sql({"/InsertData.sql"})
     void testGetDepartmentStudentsByName() throws Exception {
-        mockMvc.perform(get("/departments/ASI/students"))
+        mockMvc.perform(get("api/departments/ASI/students"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id", equalTo(1)))
                 .andExpect(jsonPath("$[0].firstname", equalTo("Gautier")))
@@ -51,14 +51,14 @@ class DepartmentControllerTestIT {
     @Test
     @Sql({"/InsertData.sql"})
     void testGetNonExistingDepartmentStudentsByName() throws Exception {
-        mockMvc.perform(get("/departments/NIMPORTEQUOI/students"))
+        mockMvc.perform(get("api/departments/NIMPORTEQUOI/students"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     @Sql({"/InsertData.sql"})
     void testGetDepartmentCountByName() throws Exception {
-        mockMvc.perform(get("/departments/ASI/count"))
+        mockMvc.perform(get("api/departments/ASI/count"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", equalTo(48)));
     }
@@ -66,7 +66,7 @@ class DepartmentControllerTestIT {
     @Test
     @Sql({"/InsertData.sql"})
     void testGetNonExistingDepartmentCountsByName() throws Exception {
-        mockMvc.perform(get("/departments/NIMPORTEQUOI/count"))
+        mockMvc.perform(get("api/departments/NIMPORTEQUOI/count"))
                 .andExpect(status().isNotFound());
     }
 }

@@ -1,0 +1,19 @@
+---
+- hosts: prod
+  become: true
+
+  vars:
+    # DB config
+    db_name: appdb
+    db_user: "{{ vault_db_user }}"
+    db_password: "{{ vault_db_password }}"
+
+    docker_platform: "linux/amd64"
+
+  roles:
+    - install_docker
+    - create_network
+    - create_volume
+    - launch_database
+    - launch_app
+    - launch_proxy

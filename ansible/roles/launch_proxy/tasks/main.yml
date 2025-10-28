@@ -1,0 +1,10 @@
+- name: Run HTTPD proxy
+  community.docker.docker_container:
+    name: httpd
+    image: "yorgohaykal/devops-httpd:latest"
+    restart_policy: no
+    networks:
+      - name: proxy-network
+    published_ports:
+      - "80:80"
+# tasks file for roles/launch_proxy

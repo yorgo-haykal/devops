@@ -1,0 +1,26 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: Run PostgreSQL
+  community.docker.docker_container:
+    name: database
+    image: "yorgohaykal/devops-database:latest"
+    restart_policy: unless-stopped
+    networks:
+      - name: app-network
+    env:
+      POSTGRES_DB: "{{ db_name }}"
+      POSTGRES_USER: "{{ db_user }}"
+      POSTGRES_PASSWORD: "{{ db_password }}"
+    volumes:
+      - devops-db-data:/var/lib/postgresql/data
+
+- name: Wait for postgres ready
+  command: docker exec database pg_isready -U "{{ db_user }}" -d "{{ db_name }}"
+  register: pg_isready_check
+  retries: 12
+  delay: 5
+  until: pg_isready_check.rc == 0
+  changed_when: false
+
+# tasks file for roles/launch_database
+

@@ -1,0 +1,12 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: Create app network
+  community.docker.docker_network:
+    name: app-network
+    state: present
+
+- name: Create proxy network
+  community.docker.docker_network:
+    name: proxy-network
+    state: present
+# tasks file for roles/create_network

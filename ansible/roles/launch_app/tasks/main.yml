@@ -1,0 +1,16 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: Run backend app
+  community.docker.docker_container:
+    name: backend
+    image: "yorgohaykal/devops-backend:latest"
+    state: started
+    restart_policy: always
+    networks:
+      - name: app-network
+      - name: proxy-network
+    env:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://database:5432/{{ db_name }}"
+      SPRING_DATASOURCE_USERNAME: "{{ db_user }}"
+      SPRING_DATASOURCE_PASSWORD: "{{ db_password }}"
+# tasks file for roles/launch_app

@@ -1,0 +1,7 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: Create DB volume
+  community.docker.docker_volume:
+    name: devops-db-data
+    state: present
+# tasks file for roles/create_volume

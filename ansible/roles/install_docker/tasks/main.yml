@@ -1,0 +1,14 @@
+#SPDX-License-Identifier: MIT-0
+---
+
+- name: Install Docker (Debian/Ubuntu)
+  apt:
+    name: docker.io
+    state: present
+
+- name: Ensure Docker is running and enabled
+  service:
+    name: docker
+    state: started
+    enabled: true
+# tasks file for roles/install_docker
